@@ -61,7 +61,23 @@ input[type="file"]{
 .image-container {
     display: none;
 }
-.result label {
+.result button {
+    display: none;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 60;
+    background-color: blue;
+    color: white;
+    padding: 16px;
+    width: 300px;
+    border-radius: 8px;
+    margin: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 1px;
+    border: none;
+}
+.result label  {
     display: block;
     text-align: center;
     font-size: 26px;
@@ -75,6 +91,7 @@ input[type="file"]{
     font-weight: 500;
     cursor: pointer;
     letter-spacing: 1px;
+    border: none;
 }
 @media screen and (max-width: 620px){
     .wrapper {

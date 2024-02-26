@@ -3,7 +3,7 @@ let filterB = document.getElementById("contrast");
 let filterC = document.getElementById("hue-rotate");
 let filterD = document.getElementById("sepia");
 
-let noFlipBtn = document.getElementById("flip-no");
+let noFlipBtn = document.getElementById("no-flip");
 let flipXBtn = document.getElementById("flip-x");
 let flipYBtn = document.getElementById("flip-y");
 
@@ -11,8 +11,41 @@ let uploadButton = document.getElementById("upload-button");
 
 let image = document.getElementById("choosen-image");
 
+let downloadBtn = document.getElementById("download-img");
+
+function DownloadImg() {
+    const editedCanvas = document.createElement('canvas');
+    const editedContext = editedCanvas.getContext('2d');
+    editedCanvas.width = image.width;
+    editedCanvas.height = image.height;
+    editedContext.filter = image.style.filter;
+    editedContext.drawImage(image, 0, 0);
+    const editedImageURL = editedCanvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = editedImageURL;
+    link.download = 'edited_image.png';
+    link.click();
+}
+
+downloadBtn.addEventListener("click", DownloadImg);
+
+
+function ResetFilter  ()  {
+    filterA.value="0";
+    filterB.value="100";
+    filterC.value="0";
+    filterD.value="0";
+    noFlipBtn.checked= true;
+    addFilter();
+    flipImage();
+    
+}
+
 uploadButton.onchange = () => {
+    ResetFilter();
     document.querySelector(".image-container").style.display = "block";
+    document.querySelector("button").style.display = "block";
     let reader = new FileReader();
     reader.readAsDataURL(uploadButton.files[0]);
     reader.onload = () => {
@@ -33,4 +66,22 @@ function addFilter() {
             sepia(${filterD.value}%)
     `;
     console.log(image.style.filter);
+}
+
+
+let radioBtns = document.querySelectorAll(".flip-option input[type='radio']");
+radioBtns.forEach( (radioBtn) => {
+    radioBtn.addEventListener("click", flipImage); 
+});
+
+function flipImage (){
+  if(flipXBtn.checked){
+    image.style.transform= "ScaleX(-1)";
+  }
+  else if(flipYBtn.checked){
+    image.style.transform= "ScaleY(-1)";
+  } else {
+    image.style.transform= "Scale(1, 1)";   // reset  scaling and return it to the original size
+    
+  } 
 }
